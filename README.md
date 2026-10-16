@@ -44,20 +44,9 @@ Ollama enables local model inference, reducing reliance on hosted LLM APIs for s
 
 ## Architecture
 
+<img width="1700" height="1592" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/68677581-c1f1-40a7-9a93-9b2827a904f8" />
 
-flowchart TD
-    A[User / Caller] --> B[React Frontend]
-    B --> C[LiveKit Session]
-    C --> D[Voice Agent - Python]
-    D --> E[Deepgram STT]
-    E --> F[LLM Processing]
-    F --> G[Ollama]
-    G --> H[Qwen 2.5 3B]
-    H --> I[Tool Orchestration]
-    I --> J[13 Regular Skills]
-    I --> K[5 MCP Business Tools]
-    I --> L[Edge TTS]
-    L --> C
+
 
 
 The diagram illustrates the intended high-level design. Exact execution paths depend on the active application configuration.
