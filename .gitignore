@@ -43,3 +43,8 @@ export-test.*
 
 # Backup copies
 *.backup_*
+
+# Local temporary files
+README.txt
+/src/
+/nexus-frontend-ui-fix/
