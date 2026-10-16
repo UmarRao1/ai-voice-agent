@@ -1,6 +1,6 @@
 # Nexus AI Voice Agent
 
-**A real-time, multilingual AI voice receptionist powered by LiveKit, Python, React, and Model Context Protocol (MCP).**
+**A real-time, multilingual AI voice receptionist powered by LiveKit,Deepgram, Ollama, Python, React, and Model Context Protocol (MCP).**
 
 Nexus AI Voice Agent is a voice-based assistant project designed to handle spoken conversations, respond to user requests, and connect AI interactions with application tools. It combines real-time voice infrastructure with a Python backend and a web-based interface.
 
@@ -29,44 +29,36 @@ The project explores how real-time voice AI, tool calling, and web applications 
 |---|---|
 | Backend | Python |
 | Voice infrastructure | LiveKit |
-| Speech-to-text | Deepgram |
-| Text-to-speech | Edge TTS |
+| Speech-to-text (STT) | Deepgram |
+| Text-to-speech (TTS) | Edge TTS |
+| Language model runtime | Ollama |
+| Local language model | Qwen 2.5 3B (`qwen2.5:3b`) |
+| LLM API compatibility | OpenAI-compatible local endpoint |
 | Frontend | React |
 | Frontend tooling | Vite |
-| Business tool integration | Model Context Protocol (MCP) |
-| Local development | Windows, PowerShell, Python virtual environment |
+| Tool integration | Model Context Protocol (MCP) |
+| Development environment | Windows, PowerShell, Python virtual environment |
+
+Ollama enables local model inference, reducing reliance on hosted LLM APIs for supported workflows. The application can use the configured local endpoint at `http://localhost:11434/v1`, with `qwen2.5:3b` as the model when selected in the application configuration.
+
 
 ## Architecture
 
-```text
-                 ┌─────────────────────┐
-                 │   User / Caller     │
-                 └──────────┬──────────┘
-                            │
-                 ┌──────────▼──────────┐
-                 │ React Web Interface │
-                 └──────────┬──────────┘
-                            │
-                 ┌──────────▼──────────┐
-                 │    LiveKit Session  │
-                 └──────────┬──────────┘
-                            │
-              ┌─────────────▼─────────────┐
-              │      Voice Agent          │
-              │                           │
-              │ Deepgram STT               │
-              │ LLM response processing   │
-              │ Edge TTS                  │
-              └─────────────┬─────────────┘
-                            │
-                 ┌──────────▼──────────┐
-                 │  Tool Orchestration │
-                 └───────┬───────┬────┘
-                         │       │
-                ┌────────▼─┐   ┌─▼────────┐
-                │ App Skills│   │ MCP Tools│
-                └──────────┘   └──────────┘
-```
+
+flowchart TD
+    A[User / Caller] --> B[React Frontend]
+    B --> C[LiveKit Session]
+    C --> D[Voice Agent - Python]
+    D --> E[Deepgram STT]
+    E --> F[LLM Processing]
+    F --> G[Ollama]
+    G --> H[Qwen 2.5 3B]
+    H --> I[Tool Orchestration]
+    I --> J[13 Regular Skills]
+    I --> K[5 MCP Business Tools]
+    I --> L[Edge TTS]
+    L --> C
+
 
 The diagram illustrates the intended high-level design. Exact execution paths depend on the active application configuration.
 
@@ -103,6 +95,39 @@ ai-voice-agent/
 ```
 
 ## Getting Started
+
+### Configure Ollama for Local LLM Inference
+
+1. Install [Ollama](https://ollama.com/download) for Windows.
+2. Open PowerShell and download the model:
+
+   ```powershell
+   ollama pull qwen2.5:3b
+   ```
+
+3. Confirm the model is available:
+
+   ```powershell
+   ollama list
+   ```
+
+4. Check the local API endpoint:
+
+   ```powershell
+   Invoke-RestMethod http://localhost:11434/api/tags
+   ```
+
+5. Configure the application to use the local OpenAI-compatible endpoint:
+
+   ```text
+   Base URL: http://localhost:11434/v1
+   Model: qwen2.5:3b
+   ```
+
+   Use these settings only when the application's active LLM configuration supports the Ollama-compatible endpoint.
+
+**Note:** Local inference performance depends on available RAM, CPU/GPU resources, model settings, and prompt length.
+
 
 ### Prerequisites
 
