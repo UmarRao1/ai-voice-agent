@@ -1,0 +1,45 @@
+﻿.venv/
+__pycache__/
+*.py[cod]
+.env
+voice_agent.db
+node_modules/
+frontend/dist/
+.pytest_cache/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Frontend dependencies and build output
+node_modules/
+frontend/dist/
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Backups and temporary archives
+backups/
+*.bak
+*.zip
+
+# Generated exports and test documents
+exports/
+transcripts/
+export-test.*
+
+# Backup copies
+*.backup_*

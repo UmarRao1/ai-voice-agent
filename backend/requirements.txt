@@ -1,0 +1,13 @@
+﻿fastapi
+uvicorn[standard]
+python-dotenv
+sqlalchemy[asyncio]
+aiosqlite
+livekit-agents
+livekit-plugins-deepgram
+livekit-plugins-openai
+mcp[cli]<2
+edge-tts
+
+python-docx
+reportlab
